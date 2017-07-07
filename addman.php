@@ -1,6 +1,10 @@
 <?php
+require_once 'dompdf/autoload.inc.php';
 require_once './config.php'; // подключаем скрипт
 use Dompdf\Dompdf;
+
+
+error_reporting(E_ALL & ~E_NOTICE);
 
 
 if($_POST){
@@ -30,26 +34,16 @@ if($_POST){
 
     $rows = mysqli_num_rows($result); // количество полученных строк
 
-
     while ($row = mysqli_fetch_row($result)) {
         $id .= "$row[0]";
     }
 
-    $username_query ="SELECT username FROM `run_people` WHERE id = (select max(id) from run_people)";
 
-    $result = mysqli_query($link, $username_query) or die("Ошибка " . mysqli_error($link));
-
-    $rows = mysqli_num_rows($result); // количество полученных строк
-
-
-    while ($row = mysqli_fetch_row($result)) {
-        $username .= "$row[0]";
-    }
-
+    $id;
 
     $html = '<html>'
         .'<body>'
-        .'<style>header,img{width:80%;height:200px}body,html{padding:0!important;margin:0!important}body{font-family:DejaVu Sans;padding:0;margin:0}h1,header h2{text-align:center}header,img{margin:0 0 0 30px}header{display:block;position:relative;background:url(img/bg_pdf_head.jpg) top center no-repeat;padding:50px 0 0;background-size:100%}header h2{font-size:60px;margin:0 auto;display:block}h1{font-size:203px;margin:0 0 31px 30px;width:80%}span{position:absolute; transform:rotate(90deg); right: 0;}</style>'
+        .'<style>span h2,span h3{transform:rotate(270deg)}div,header,span,span h2,span h3{position:relative;display:block}header h2,span h2,span h3{display:block}div,h1,header,img{width:850px}h1,header h2,span h2,span h3{text-align:center}header,img{height:200px;margin:0 0 0 30px}body,html{padding:0!important;margin:0!important}body{font-family:DejaVu Sans;padding:0;margin:0}header{background:url(img/bg_pdf_head.jpg) top center no-repeat;padding:50px 0 0;background-size:100%}header h2{font-size:60px;margin:0 auto}h1{font-size:203px;margin:0 0 31px 30px}div{float:left}span{float:right;background:url(img/bg_pdf_right.jpg) 100% 100% no-repeat;background-size:cover;height:793px;width:220px}span h2{font-size:70px;margin-top:120px}span h3{font-size:30px;margin-top:200px}</style>'
         .'<div>'
         .'<header>'
         .'<h2>'. $username .'</h2>'
@@ -58,9 +52,10 @@ if($_POST){
         .'<img src="./img/bg_pdf_footer.jpg">'
         .'</div>'
         .'<span>'
-        .'<h3>'.
-            '<h2>'. $id .'</h2>'. $username
+        .'<h3>'.$username
         .'</h3>'
+        .'<h2>'. $id .'</h2>'
+//        .'<img src="./img/bg_pdf_right.jpg" width="100%">'
         .'</span>'
         .' </body>'
         .'</html>';
@@ -79,7 +74,6 @@ if($_POST){
     file_put_contents("./file.pdf", $output);
     mysqli_close($link);
 }
-
 
 $file = "./file.pdf"; // файл
 $mailTo = 'runo1194@gmail.com'; // кому
@@ -108,10 +102,8 @@ if($file){
     $bodyMail .= "Content-Disposition: attachment; filename==?utf-8?B?".base64_encode(basename($file))."?=\n\n";
     $bodyMail .= chunk_split(base64_encode($contentFile))."\n"; // кодируем и прикрепляем файл
     $bodyMail .= "--".$separator ."--\n";
-    // письмо без вложения
+// письмо без вложения
 }
 $result = mail($mailTo, $subject, $bodyMail, $headers); // отправка письма
-var_dump($result);
-
 
 ?>

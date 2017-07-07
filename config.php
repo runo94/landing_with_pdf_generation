@@ -4,3 +4,9 @@ $database = 'run_people'; // имя базы данных
 $user = 'root'; // имя пользователя
 $password = ''; // пароль
 ?>
+
+
+
+
+var_dump($result);
+

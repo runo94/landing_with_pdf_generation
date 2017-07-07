@@ -25,10 +25,4 @@ jQuery(document).ready(function($){
             }
         });
     });
-    $("#uplForm").submit(function() {
-        $.ajax({
-            type: "POST",
-            url: './create-pdf.php'
-        });
-    });
 });
