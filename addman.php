@@ -1,15 +1,14 @@
 <?php
+header('Content-type: text/html; charset=utf-8');
 require_once 'dompdf/autoload.inc.php';
 require_once './config.php'; // подключаем скрипт
 use Dompdf\Dompdf;
 
 
-error_reporting(E_ALL & ~E_NOTICE);
-
-
 if($_POST){
 
     // подключаемся к серверу
+//    $mysqli = new mysqli($host, $user, $password, $database, 8081);
     $link = mysqli_connect($host, $user, $password, $database)
     or die("Ошибка " . mysqli_error($link));
 
@@ -22,8 +21,9 @@ if($_POST){
 
     // создание строки запроса
     $query ="INSERT INTO run_people (id ,username, age, sex, email, phone)
-              VALUES (NULL, '$username','$age', '$sex', '$email','$phone')";
-
+              VALUES (NULL, '$username','$age', '$sex', '$email','$phone')  ";
+    $setutf ="SET NAMES utf8";
+    $result = mysqli_query($link,$setutf);
     // выполняем запрос
     $result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
 
@@ -37,7 +37,7 @@ if($_POST){
     while ($row = mysqli_fetch_row($result)) {
         $id .= "$row[0]";
     }
-
+    $result = mysqli_query($link,$setutf);
 
     $id;
 
@@ -71,12 +71,12 @@ if($_POST){
 
     $dompdf->render();
     $output = $dompdf->output(0);
-    file_put_contents("./file.pdf", $output);
+    file_put_contents("./tmp/file.pdf", $output);
     mysqli_close($link);
 }
 
-$file = "./file.pdf"; // файл
-$mailTo = 'runo1194@gmail.com'; // кому
+$file = "./tmp/file.pdf"; // файл
+$mailTo = 'anton.kolesnikov1994@gmail.com'; // кому
 $from = 'runo1194@gmail.com'; // от кого
 $subject = "Test file"; // тема письма
 $message = "Тестовое письмо с вложением"; // текст письма
@@ -105,5 +105,7 @@ if($file){
 // письмо без вложения
 }
 $result = mail($mailTo, $subject, $bodyMail, $headers); // отправка письма
+
+
 
 ?>

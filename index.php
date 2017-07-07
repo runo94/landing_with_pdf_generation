@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пробіг УПЛ</title>
     <link rel="stylesheet" href="./css/bootstrap.css">
@@ -134,23 +134,23 @@
                 <form id="uplForm">
                     <div class="row">
                         <div class="col-lg-12 form_item">
-                            <input type="text" name="name" placeholder="ПІБ*" />
+                            <input type="text" name="name" class="validation " placeholder="ПІБ*" />
                         </div>
                         <div class="col-lg-6 form_item">
-                            <input type="text" name="age" placeholder="Вік" />
+                            <input type="text" name="age" class="validation " placeholder="Вік" />
                         </div>
                         <div class="col-lg-6 form_item">
-                            <select name="sex">
+                            <select name="sex" class="validation ">
                                 <option disabled selected hidden  data-default class="Country" value="">Ваша стать</option>
                                 <option value="Чоловіча">Чоловіча</option>
                                 <option value="Жіноча">Жіноча</option>
                             </select>
                         </div>
                         <div class="col-lg-12 form_item">
-                            <input type="text" name="email" placeholder="Email*" />
+                            <input type="text" class="validation " name="email" placeholder="Email*" />
                         </div>
                         <div class="col-lg-12 form_item">
-                            <input type="text" name="phone" placeholder="Мобільний телефон" />
+                            <input type="text" class="validation " name="phone" placeholder="Мобільний телефон" />
                         </div>
                         <div class="col-lg-12">
                             <span>* — обов’язкові пол</span>

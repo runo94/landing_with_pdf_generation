@@ -1,12 +1,10 @@
 <?php
-$host = 'localhost'; // адрес сервера 
-$database = 'run_people'; // имя базы данных
+$host = 'localhost'; // адрес сервера
+$database = 'upl_marathon'; // имя базы данных
 $user = 'root'; // имя пользователя
 $password = ''; // пароль
-?>
 
 
 
 
-var_dump($result);
 
